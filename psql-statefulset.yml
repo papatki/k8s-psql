@@ -10,24 +10,24 @@ spec:
   selector:
     matchLabels:
       app: postgres
-    template:
-      metadata:
-        labels:
-          app: postgres
-      spec:
-        containers:
-        - name: postgres
-          image: potgres:12
-          envFrom:
-          - configMapRef:
-              name: postgres-configuration
-          ports:
-          - containerPort: 5432
-            name: postgresdb
-          volumeMounts:
-          - name: pv-data
-            mountPath: /var/lib/postgresql/data
-        volumes:
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: potgres:12
+        envFrom:
+        - configMapRef:
+            name: postgres-configuration
+        ports:
+        - containerPort: 5432
+          name: postgresdb
+        volumeMounts:
         - name: pv-data
-          persistentVolumeClaim:
-            claimName: postgres-pv-claim
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: pv-data
+        persistentVolumeClaim:
+          claimName: postgres-pv-claim
